@@ -79,3 +79,37 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+//Need window on load to wait for the dom to first load, then start running functions
+window.onload=function(){
+  //This is after someone logs in
+  document.querySelector("#submitUsername").addEventListener("click", function(){
+    //Innervalue of the Login username
+    var innerVal = `<strong> ${document.getElementById("loginId").value} </strong>`; 
+
+    //Hiding login, and you can now chat with your username visible
+    document.getElementById("login").classList.add("hide");
+    document.getElementById("chatBot").classList.remove("hide");
+    
+    //Displays the username
+    document.getElementById("username").innerHTML = innerVal;
+
+
+
+
+
+  });
+
+
+  //This is when someone submits a message
+  document.querySelector("#submitButton").addEventListener("click", function(){
+    //The message displays the username and message
+    var innerVal = `<li> ${document.getElementById("username").innerHTML}: 
+                    ${document.getElementById("chatTextBox").value} </li>`;
+    //Makes typing this easier                
+    var message = document.getElementById("messages");
+    //Display the messages
+    message.innerHTML += innerVal;
+
+  })
+};

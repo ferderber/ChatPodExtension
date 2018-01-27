@@ -4,7 +4,37 @@
 <head>
   <title>ChatPod</title>
   <style type="text/css">
-  </style>
+      body {
+        margin: 20px;
+        background-color: gold
+      }
+      li{
+        padding-top: 5px;
+        list-style: none;
+      }
+      .chatArea{
+        height: 350px;
+        width: 600px;
+        background-color:white;
+        margin-bottom: 15px;
+        overflow: scroll;
+      }
+      .hide{
+        display: none;
+      }
+      #login p{
+        margin: 0;
+        padding-right: 5px;
+        padding-top: 3px;
+        float: left;
+      }
+      #chatBot p{
+        margin: 0;
+        padding-right: 5px;
+        padding-top: 3px;
+        float: left;
+      }
+    </style>
   <script src="popup.js"></script>
 </head>
 
@@ -18,6 +48,24 @@
 
     </div>
     <input id="messageBox" type="text" value="" />
+  </div>
+  <h1>Welcome to the Chat!</h1>
+    <form action="" id="chat">
+      <div class="chatArea" >
+          <ul id="messages"></ul>
+      </div>
+
+      <div id="login">
+        <input id="loginId" type="text" placeholder="Username" maxlength="15">
+        <button id="submitUsername" type="button">Login</button>
+      </div>
+
+      <div id="chatBot" class="hide">
+        <p id="username"></p>
+        <input id="chatTextBox" type="text" placeholder="Put your message here" maxlength="140">
+        <button id="submitButton" type="button" length="50">Submit</button>
+      </div>
+    </form>
   </div>
 </body>
 
