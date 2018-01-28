@@ -14,15 +14,19 @@ li{
   padding-top: 5px;
   list-style: none;
 }
+img{
+  padding-left: 160px;
+}
+#header h1{
+  text-align: center;
+}
 hr{
   width: 350px;
   margin-right: auto;
   margin-left: auto;
-  height: 1px;
+  height: 3px;
   background-color: black;
-}
-#header h1{
-  text-align: center;
+  margin-bottom: 15px;
 }
 .messageRegion{
   /* background-color: darkslategray; */
@@ -54,6 +58,6 @@ hr{
   float: left;
 }
 #chatTitle{
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   margin-left: 21px;
 }
