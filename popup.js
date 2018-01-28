@@ -91,10 +91,9 @@ document.addEventListener('DOMContentLoaded', () => {
       socket.send(JSON.stringify({type: SET_URL, url}));
     });
     socket.addEventListener('message', (event) => {
-        console.log(event.data);
-      if(event.data.type === MESSAGE) {
-        console.log(event.data);
-        messages.innerHTML += `<li> ${event.data.user.name} ${event.data.message}</li>`
+      const data = JSON.parse(event.data);
+      if(data.type === MESSAGE) {
+        messages.innerHTML += `<li> ${data.user.name}: ${data.message}</li>`
       } else {
 
       }
