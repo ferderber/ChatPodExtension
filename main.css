@@ -41,6 +41,8 @@ hr{
   overflow: scroll;
   word-wrap: break-word;
   white-space: initial;
+  display: flex;
+  flex-direction: column-reverse;
 
 }
 .hide{
