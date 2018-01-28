@@ -1,6 +1,8 @@
 const MESSAGE = 'MESSAGE';
 const SET_URL = 'SET_URL';
 const SET_NAME = 'SET_NAME';
+const CONNECTED = 'CONNECTED';
+let name = "";
 let socket;
 
 /**
@@ -85,17 +87,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const messageBox = document.querySelector('#messageBox');
     const chatTextBox = document.querySelector('#chatTextBox');
     const messages = document.querySelector('#messages');
-    socket = new WebSocket('ws://localhost:8080');
+    const username = document.querySelector("#username");
+
+    socket = new WebSocket('ws://ws.cobaltium.net');
 
     socket.addEventListener('open', (event) => {
       socket.send(JSON.stringify({type: SET_URL, url}));
     });
     socket.addEventListener('message', (event) => {
       const data = JSON.parse(event.data);
-      if(data.type === MESSAGE) {
-        messages.innerHTML += `<li> ${data.user.name}: ${data.message}</li>`
-      } else {
-
+      switch(data.type) {
+        case MESSAGE:
+          messages.innerHTML += `<li> ${data.user.name}: ${data.message}</li>`
+        break;
+          case SET_NAME:
+        break;
+        case CONNECTED:
+          console.log(data);
+          name = data.name;
+          username.innerHTML = name;
       }
     });
 
@@ -133,7 +143,7 @@ window.onload = function () {
       document.getElementById("chatBot").classList.remove("hide");
 
       //Displays the username
-      document.getElementById("username").innerHTML = innerVal;
+      // document.getElementById("username").innerHTML = innerVal;
 
     });
 
