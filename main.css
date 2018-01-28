@@ -3,7 +3,7 @@ body {
   min-width: 400px;
   white-space: nowrap;
   margin: 20px;
-  background-color: gold;
+  background-color: rgb(230, 230, 230);
 }
 #container {
   align-items: center;
@@ -14,12 +14,29 @@ li{
   padding-top: 5px;
   list-style: none;
 }
+hr{
+  width: 350px;
+  margin-right: auto;
+  margin-left: auto;
+  height: 1px;
+  background-color: black;
+}
+#header h1{
+  text-align: center;
+}
+.messageRegion{
+  /* background-color: darkslategray; */
+  padding: 20px;
+}
 .chatArea{
   height: 350px;
   width: 600px;
   background-color:white;
   margin-bottom: 15px;
   overflow: scroll;
+  word-wrap: break-word;
+  white-space: initial;
+
 }
 .hide{
   display: none;
@@ -35,4 +52,8 @@ li{
   padding-right: 5px;
   padding-top: 3px;
   float: left;
+}
+#chatTitle{
+  margin-bottom: 10px;
+  margin-left: 21px;
 }
