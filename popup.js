@@ -70,7 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatTitle = document.querySelector('#chatTitle');
     const messageBox = document.querySelector('#messageBox');
 
-    chatTitle.innerHTML = url;
+
+    chatTitle.innerHTML = `<strong>Domain:</strong> ${/^https?\:\/\/(?:www\.)?([\w\d]+\.\w+)/.exec(url)[1]}`;
 
     messageBox.addEventListener('keypress', (e) => {
       if (e.keyCode == 13) {
