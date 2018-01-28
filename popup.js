@@ -2,6 +2,7 @@ const MESSAGE = 'MESSAGE';
 const SET_URL = 'SET_URL';
 const SET_NAME = 'SET_NAME';
 const CONNECTED = 'CONNECTED';
+const GET_MESSAGES = 'GET_MESSAGES';
 let name = "";
 let socket;
 
@@ -93,6 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     socket.addEventListener('open', (event) => {
       socket.send(JSON.stringify({type: SET_URL, url}));
+      socket.send(JSON.stringify({type: GET_MESSAGES}));
     });
     socket.addEventListener('message', (event) => {
       const data = JSON.parse(event.data);
@@ -106,11 +108,19 @@ document.addEventListener('DOMContentLoaded', () => {
           console.log(data);
           name = data.name;
           username.innerHTML = name;
+          break;
+        case GET_MESSAGES:
+          const newMessages = data.messages;
+          if(newMessages) {
+            newMessages.forEach((msg) => messages.innerHTML += `<li> ${msg.user.name}: ${msg.message}</li>`);
+          }
+          break;
       }
     });
 
     chatTextBox.addEventListener('keypress', (e) => {
       if(e.keyCode === 13) {
+        e.preventDefault();
         handleMessage();
       }
     });
@@ -123,7 +133,6 @@ function handleMessage() {
   var innerVal = `<li> ${document.getElementById("username").innerHTML}: ${msg} </li>`;
   var message = document.getElementById("messages");
   message.innerHTML += innerVal;
-  console.log('sending' + msg);
   socket.send(JSON.stringify({type: MESSAGE, message: msg}));
   chatTextBox.value = "";
 }
@@ -131,22 +140,6 @@ function handleMessage() {
 // Need window on load to wait for the dom to first load, then start running
 // functions
 window.onload = function () {
-  //This is after someone logs in
-  document
-    .querySelector("#submitUsername")
-    .addEventListener("click", function () {
-      //Innervalue of the Login username
-      var innerVal = `<strong> ${document.getElementById("loginId").value} </strong>`;
-
-      //Hiding login, and you can now chat with your username visible
-      document.getElementById("login").classList.add("hide");
-      document.getElementById("chatBot").classList.remove("hide");
-
-      //Displays the username
-      // document.getElementById("username").innerHTML = innerVal;
-
-    });
-
   //This is when someone submits a message
   document.querySelector("#submitButton").addEventListener("click", handleMessage);
 };
