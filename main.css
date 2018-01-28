@@ -48,12 +48,6 @@ hr{
 .hide{
   display: none;
 }
-#login p{
-  margin: 0;
-  padding-right: 5px;
-  padding-top: 3px;
-  float: left;
-}
 #chatBot p{
   margin: 0;
   padding-right: 5px;
