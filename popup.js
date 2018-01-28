@@ -1,6 +1,7 @@
 const MESSAGE = 'MESSAGE';
 const SET_URL = 'SET_URL';
 const SET_NAME = 'SET_NAME';
+let socket;
 
 /**
  * Get the current URL.
@@ -82,25 +83,41 @@ document.addEventListener('DOMContentLoaded', () => {
   getCurrentTabUrl((url) => {
     const chatTitle = document.querySelector('#chatTitle');
     const messageBox = document.querySelector('#messageBox');
-    const socket = new WebSocket('ws://localhost:8080');
+    const chatTextBox = document.querySelector('#chatTextBox');
+    const messages = document.querySelector('#messages');
+    socket = new WebSocket('ws://localhost:8080');
 
     socket.addEventListener('open', (event) => {
-      socket.send(JSON.stringify({type: SEND_URL, url}));
+      socket.send(JSON.stringify({type: SET_URL, url}));
     });
     socket.addEventListener('message', (event) => {
-      console.log('Message:' + event.data);
-    });
+        console.log(event.data);
+      if(event.data.type === MESSAGE) {
+        console.log(event.data);
+        messages.innerHTML += `<li> ${event.data.user.name} ${event.data.message}</li>`
+      } else {
 
-
-    chatTitle.innerHTML = `<strong>Domain:</strong> ${/^https?\:\/\/(?:www\.)?([\w\d]+\.\w+)/.exec(url)[1]}`;
-
-    messageBox.addEventListener('keypress', (e) => {
-      if (e.keyCode == 13) {
-        console.log('Enter pressed.');
       }
     });
+
+    chatTextBox.addEventListener('keypress', (e) => {
+      if(e.keyCode === 13) {
+        handleMessage();
+      }
+    });
+
+    chatTitle.innerHTML = `<strong>Domain:</strong> ${/^https?\:\/\/(?:www\.)?([\w\d]+\.\w+)/.exec(url)[1]}`;
   });
 });
+function handleMessage() {
+  const msg = document.getElementById("chatTextBox").value;
+  var innerVal = `<li> ${document.getElementById("username").innerHTML}: ${msg} </li>`;
+  var message = document.getElementById("messages");
+  message.innerHTML += innerVal;
+  console.log('sending' + msg);
+  socket.send(JSON.stringify({type: MESSAGE, message: msg}));
+  chatTextBox.value = "";
+}
 
 // Need window on load to wait for the dom to first load, then start running
 // functions
@@ -122,13 +139,5 @@ window.onload = function () {
     });
 
   //This is when someone submits a message
-  document.querySelector("#submitButton").addEventListener("click", function () {
-      //The message displays the username and message
-      var innerVal = `<li> ${document.getElementById("username").innerHTML}: ${document.getElementById("chatTextBox").value} </li>`;
-      //Makes typing this easier
-      var message = document.getElementById("messages");
-      //Display the messages
-      message.innerHTML += innerVal;
-
-    })
+  document.querySelector("#submitButton").addEventListener("click", handleMessage);
 };
