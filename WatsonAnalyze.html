@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"></script>
+		<style type="text/css">
+		body{
+			font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+    h1{
+			margin: 0;
+			text-align: center; 
+			padding: 20px; 
+			background: darkslategrey;
+		}
+		.mainArea{
+			margin-top: 40px;
+			width: 980px;
+			height: 1000px;
+			margin-right: auto;
+			margin-left: auto;
+		}
+		textarea{
+			margin-top: 40px;
+			margin-left: 200px;
+		}
+		h3{
+			text-align: center;
+		}
+		.reaction{
+			background: rgb(189, 189, 189);
+			padding: 20px;
+		}
+		.hide{
+			display: none;
+		}
+    </style>
+    <title>Watson Analyzer</title>
+</head>
+<body>
+    <h1>Watson Text Analyzer</h1>
+    <div class="mainArea">
+				<h2></h2>
+			<h3><b>Title:</b> <i>https://www.cnn.com/2018/01/17/health/tide-laundry-pod-challenge-poison-control/index.html</i></h3>
+
+			<textarea rows="20" cols="100">A lot of people got mad at Tide because their pods look like candy (kinda) to little kids who got sick off of eating them. I guess people couldn’t store them out of reach or buy liquid detergent for some reason. So internet People made fun of people who said it looked too much like food, so of course it became a meme. Some mixture of the internet needing a new challenge, boredom, and what I can only assume is the desire to have your insides as clean as only tide can make them led to this. And people have actually eaten them. It looks horrendous.More adults have died of eating laundry pods than kids.
+
+					I'm not sure where this news article fits into the meme timeline, but I'm pretty sure it was an aggravating factor. Also if you read on the numbers are two toddlers and four adults, so the statistics are too sketchy to come to any broad conclusions about (the adults all had dementia and the toddlers were, well, toddlers) other than it's pretty rare any way you slice it. That said there may have been a recent uptick because of the meme, though I haven't seen any news talking about that so I doubt it - in all the tide pod challenge videos I've seen the person spits it out immediately.I was doing laundry tonight and afterwards I got my step son a piece of pizza he asked for, I had gotten sauce on my hand and licked it off. I got the most HORRIBLE taste in my mouth and had to chug water to get rid of it. It was bugging me for the longest time because I had no idea where it came from. Just read that article and apparently they put a bitter coding on the outside of the tide pods and that had to have been it. They taste HORRIBLE, idk how anyone could chew and swallow it.Kids see Tide Pods in 2012, think "I wanna eat that, it looks like candy"
+
+					Parents say "don't eat that, you'll die you dummy."
+					
+					Five years later, kids are now young teenagers, discovering other people had that same impulse thought, having their first burst of shared nostalgia with their friends.
+					
+					Combine with the fact that edgy suicide jokes have always been a dank meme, and the fact that kids are really good at shitposting now, and you have Tide Pod flavored Oreos.No it’s been awhile in the making. The tide pod challenge is new, to go along with the meme. But kids have been eating and dying from them for years
+				</textarea>
+				<button onclick="setTimeout(Analyze, 2000)">Analyze</button>
+				<script>
+					function Analyze(){
+						document.getElementById("reaction").classList.remove("hide");
+
+					}
+				</script>
+				<div id="reaction" class="reaction hide">
+					<h3>Tone</h3>
+					<div class="row">
+							<div class="col-sm-1">
+								Anger: X
+							</div>
+							<div class="col-sm-2">
+								Fear: X
+							</div>
+							<div class="col-sm-2">
+								Joy:  ✓
+							</div>
+								<div class="col-sm-2">
+								Sadness: X
+							</div>
+							<div class="col-sm-2">
+								Analytical: ✓
+							</div>
+							<div class="col-sm-2">
+								Confident: X
+							</div>
+							<div class="col-sm-1">
+								Tentative: ✓
+						</div>
+					</div>
+				</div>
+				</div>
+		</div>
+</body>
+</html>
