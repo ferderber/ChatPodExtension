@@ -1,3 +1,7 @@
+const MESSAGE = 'MESSAGE';
+const SET_URL = 'SET_URL';
+const SET_NAME = 'SET_NAME';
+
 /**
  * Get the current URL.
  *
@@ -12,14 +16,16 @@ function getCurrentTabUrl(callback) {
     currentWindow: true
   };
 
-  chrome.tabs.query(queryInfo, (tabs) => {
-    var tab = tabs[0];
+  chrome
+    .tabs
+    .query(queryInfo, (tabs) => {
+      var tab = tabs[0];
 
-    var url = tab.url;
-    console.assert(typeof url == 'string', 'tab.url should be a string');
+      var url = tab.url;
+      console.assert(typeof url == 'string', 'tab.url should be a string');
 
-    callback(url);
-  });
+      callback(url);
+    });
 }
 
 /**
@@ -31,12 +37,12 @@ function changeBackgroundColor(color) {
   var script = 'document.body.style.backgroundColor="' + color + '";';
   // See https://developer.chrome.com/extensions/tabs#method-executeScript.
   // chrome.tabs.executeScript allows us to programmatically inject JavaScript
-  // into a page. Since we omit the optional first argument "tabId", the script
-  // is inserted into the active tab of the current window, which serves as the
+  // into a page. Since we omit the optional first argument "tabId", the script is
+  // inserted into the active tab of the current window, which serves as the
   // default.
-  chrome.tabs.executeScript({
-    code: script
-  });
+  chrome
+    .tabs
+    .executeScript({code: script});
 }
 
 /**
@@ -47,9 +53,14 @@ function changeBackgroundColor(color) {
  *     the given url on success, or a falsy value if no color is retrieved.
  */
 function getSavedChat(url, callback) {
-  chrome.storage.sync.get(url, (items) => {
-    callback(chrome.runtime.lastError ? null : items[url]);
-  });
+  chrome
+    .storage
+    .sync
+    .get(url, (items) => {
+      callback(chrome.runtime.lastError
+        ? null
+        : items[url]);
+    });
 }
 
 /**
@@ -61,14 +72,24 @@ function getSavedChat(url, callback) {
 function saveChat(url, chat) {
   var items = {};
   items[url] = chat;
-  chrome.storage.sync.set(items);
+  chrome
+    .storage
+    .sync
+    .set(items);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   getCurrentTabUrl((url) => {
-
     const chatTitle = document.querySelector('#chatTitle');
     const messageBox = document.querySelector('#messageBox');
+    const socket = new WebSocket('ws://localhost:8080');
+
+    socket.addEventListener('open', (event) => {
+      socket.send(JSON.stringify({type: SEND_URL, url}));
+    });
+    socket.addEventListener('message', (event) => {
+      console.log('Message:' + event.data);
+    });
 
 
     chatTitle.innerHTML = `<strong>Domain:</strong> ${/^https?\:\/\/(?:www\.)?([\w\d]+\.\w+)/.exec(url)[1]}`;
@@ -81,36 +102,33 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-//Need window on load to wait for the dom to first load, then start running functions
-window.onload=function(){
+// Need window on load to wait for the dom to first load, then start running
+// functions
+window.onload = function () {
   //This is after someone logs in
-  document.querySelector("#submitUsername").addEventListener("click", function(){
-    //Innervalue of the Login username
-    var innerVal = `<strong> ${document.getElementById("loginId").value} </strong>`; 
+  document
+    .querySelector("#submitUsername")
+    .addEventListener("click", function () {
+      //Innervalue of the Login username
+      var innerVal = `<strong> ${document.getElementById("loginId").value} </strong>`;
 
-    //Hiding login, and you can now chat with your username visible
-    document.getElementById("login").classList.add("hide");
-    document.getElementById("chatBot").classList.remove("hide");
-    
-    //Displays the username
-    document.getElementById("username").innerHTML = innerVal;
+      //Hiding login, and you can now chat with your username visible
+      document.getElementById("login").classList.add("hide");
+      document.getElementById("chatBot").classList.remove("hide");
 
+      //Displays the username
+      document.getElementById("username").innerHTML = innerVal;
 
-
-
-
-  });
-
+    });
 
   //This is when someone submits a message
-  document.querySelector("#submitButton").addEventListener("click", function(){
-    //The message displays the username and message
-    var innerVal = `<li> ${document.getElementById("username").innerHTML}: 
-                    ${document.getElementById("chatTextBox").value} </li>`;
-    //Makes typing this easier                
-    var message = document.getElementById("messages");
-    //Display the messages
-    message.innerHTML += innerVal;
+  document.querySelector("#submitButton").addEventListener("click", function () {
+      //The message displays the username and message
+      var innerVal = `<li> ${document.getElementById("username").innerHTML}: ${document.getElementById("chatTextBox").value} </li>`;
+      //Makes typing this easier
+      var message = document.getElementById("messages");
+      //Display the messages
+      message.innerHTML += innerVal;
 
-  })
+    })
 };
