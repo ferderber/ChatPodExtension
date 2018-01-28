@@ -1,5 +1,5 @@
 const MESSAGE = 'MESSAGE';
-const SEND_URL = 'SEND_URL';
+const SET_URL = 'SET_URL';
 const SET_NAME = 'SET_NAME';
 
 /**
