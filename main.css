@@ -4,6 +4,7 @@ body {
   white-space: nowrap;
   margin: 20px;
   background-color: rgb(230, 230, 230);
+  overflow: hidden;
 }
 #container {
   align-items: center;
